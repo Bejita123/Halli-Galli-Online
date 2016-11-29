@@ -1,8 +1,12 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Socket;
 
-public class ClientStart extends JFrame implements ActionListener{
+public class ClientStart extends JFrame implements ActionListener, Runnable{
 
 	CardLayout card = new CardLayout();	// 창 전환을 위해 필요합니다!
 	Loading load = new Loading();		// 로딩창
@@ -12,7 +16,14 @@ public class ClientStart extends JFrame implements ActionListener{
 	Join join = new Join();				// 회원가입창
 	MakeRoom makeR = new MakeRoom();	// 방만들기창
 	
+<<<<<<< HEAD
 	//test
+=======
+	String id;
+    Socket s;
+    BufferedReader in;// 서버에서 값을 읽는다
+    OutputStream out; // 서버로 요청값을 보낸다
+>>>>>>> branch 'master' of https://github.com/Bejita123/Halli-Galli-Online
 	public ClientStart()
 	{
 		setLayout(card);				// BorderLayout
@@ -79,6 +90,27 @@ public class ClientStart extends JFrame implements ActionListener{
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ClientStart start = new ClientStart();
+	}
+	
+	public void connection()
+    {
+    	try
+    	{
+    		s=new Socket("localhost", 65535);		// s=>server
+    		in=new BufferedReader(new InputStreamReader(s.getInputStream()));		//서버로 값을 읽어들임
+			out=s.getOutputStream();												//서버로 값을 보냄
+			/*out.write((Function.LOGIN+"|"+id+"|"
+					+pass+"\n").getBytes());*/
+    	}catch(Exception ex){}
+    	
+    	new Thread(this).start();	// run()으로 이동  // 서버로부터 응답값을 받아서 처리
+    }
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

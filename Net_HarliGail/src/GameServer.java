@@ -1,0 +1,71 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.sql.SQLException;
+
+public class GameServer implements Runnable {
+	
+	Socket  s;
+	ServerSocket server;
+	public static void main(String[] args) throws IOException, SQLException {
+		// TODO Auto-generated method stub
+		 GameServer server=new GameServer();		        // 서버 가동
+		 
+		new Thread(server).start();
+	}
+	public GameServer() throws IOException, SQLException{
+		try
+		{
+			server=new ServerSocket(1111);			
+			System.out.println("소켓"+s+"에 연결됨");
+			System.out.println("NEW Server Start...");
+		}catch(Exception ex)
+		{
+			System.out.println(ex.getMessage());
+		}
+		
+		
+		
+		InputStream input=s.getInputStream();
+		BufferedReader bf=new BufferedReader(new InputStreamReader(input));
+		
+		String fileName=bf.readLine();
+		File f=new File("C:/test",fileName);
+		
+		FileOutputStream out=new FileOutputStream(f);
+		
+		int i=0;
+		while((i=input.read())!=-1){
+			out.write((char)i);
+		}
+		
+		System.out.println("받은 파일 C:/test 경로에 저장됨!");
+		
+		bf.close();
+		input.close();
+		out.close();
+		s.close();
+		server.close();
+		
+		DB test=new DB(fileName,"C:/test");
+		test.runDB();
+		
+		
+	}
+	public void run()							// 1. 접속을 처리
+    {
+    	while(true){
+	    	try{
+				s=server.accept();
+	    	//	ClientThread ct=new ClientThread(s);
+	    	//	ct.start();					// 통신 시작 	
+	    	}catch(Exception ex){}
+    	}	
+    }
+
+}
