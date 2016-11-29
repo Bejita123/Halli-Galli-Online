@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 public class ClientStart extends JFrame implements ActionListener, Runnable{
 
+	String serverIp = "192.168.0.19"; // server Ip addr
 	CardLayout card = new CardLayout();	// 창 전환을 위해 필요합니다!
 	Loading load = new Loading();		// 로딩창
 	Login login = new Login();			// 로그인창
@@ -28,6 +29,7 @@ public class ClientStart extends JFrame implements ActionListener, Runnable{
     
 	public ClientStart()
 	{
+		connection();
 		setLayout(card);				// BorderLayout
 		
 		add("LOGIN",login);				//로그인창
@@ -98,7 +100,7 @@ public class ClientStart extends JFrame implements ActionListener, Runnable{
     {
     	try
     	{
-    		s=new Socket("localhost", 65535);		// s=>server
+    		s=new Socket(serverIp, 1111);		// s=>server
     		in=new BufferedReader(new InputStreamReader(s.getInputStream()));		//서버로 값을 읽어들임
 			out=s.getOutputStream();												//서버로 값을 보냄
 			/*out.write((Protocol.LOGIN+"|"+id+"|"

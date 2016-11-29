@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -17,14 +18,17 @@ public class GameServer implements Runnable {
 	ServerSocket server;
 	public static void main(String[] args) throws IOException, SQLException {
 		// TODO Auto-generated method stub
+		
 		 GameServer server=new GameServer();		        // 서버 가동
 		 
 		new Thread(server).start();
 	}
 	public GameServer() throws IOException, SQLException{
 		try
-		{
-			server=new ServerSocket(1111);			
+		{ 
+			InetAddress addr = InetAddress.getByName("192.168.0.19");
+       
+			server=new ServerSocket(1111, 100 ,addr);		// port number , max_server connection, IP address	
 			System.out.println("소켓"+s+"에 연결됨");
 			System.out.println("NEW Server Start...");
 		}catch(Exception ex)
@@ -33,7 +37,7 @@ public class GameServer implements Runnable {
 		}
 		
 		
-		
+		/*
 		InputStream input=s.getInputStream();
 		BufferedReader bf=new BufferedReader(new InputStreamReader(input));
 		
@@ -57,7 +61,7 @@ public class GameServer implements Runnable {
 		
 		DB test=new DB(fileName,"C:/test");
 		test.runDB();
-		
+		*/
 		
 	}
 	public void run()							// 1. 접속을 처리
@@ -65,8 +69,8 @@ public class GameServer implements Runnable {
     	while(true){
 	    	try{
 				s=server.accept();
-	    	//	ClientThread ct=new ClientThread(s);
-	    	//	ct.start();					// 통신 시작 	
+	    		ClientThread ct=new ClientThread(s);
+	    		ct.start();					// 통신 시작 	
 	    	}catch(Exception ex){}
     	}	
     }
@@ -88,6 +92,7 @@ class ClientThread extends Thread
 			this.s=s;			//각 클라이언트의 소켓 장착
 			in=new BufferedReader(new InputStreamReader(s.getInputStream()));
 			out=s.getOutputStream();
+			System.out.println("connect by user");
 		}catch(Exception ex){}
 	}
 	
