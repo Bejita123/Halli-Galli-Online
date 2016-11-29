@@ -13,7 +13,7 @@ public class Profile extends JFrame implements ActionListener {
 	Button b1,b2;
 	TextField tf;
 	String directory="",file="";
-	
+	Socket s;
 	
 	public Profile() throws Exception{
 		b1=new Button("프로필 사진 선택");
@@ -65,6 +65,10 @@ public class Profile extends JFrame implements ActionListener {
 			System.out.println(e);
 		}		
 	}
+	public void setSocket(Socket tmp){
+		s = tmp;
+	}
+	
 	
 }
 

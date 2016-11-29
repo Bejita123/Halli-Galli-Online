@@ -2,9 +2,11 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.StringTokenizer;
 
 public class ClientStart extends JFrame implements ActionListener, Runnable{
 
@@ -15,15 +17,11 @@ public class ClientStart extends JFrame implements ActionListener, Runnable{
 	GameWindow gameR = new GameWindow();// 게임창
 	Join join = new Join();				// 회원가입창
 	MakeRoom makeR = new MakeRoom();	// 방만들기창
-	
-<<<<<<< HEAD
-	//test
-=======
 	String id;
     Socket s;
     BufferedReader in;// 서버에서 값을 읽는다
     OutputStream out; // 서버로 요청값을 보낸다
->>>>>>> branch 'master' of https://github.com/Bejita123/Halli-Galli-Online
+    
 	public ClientStart()
 	{
 		setLayout(card);				// BorderLayout
@@ -110,7 +108,24 @@ public class ClientStart extends JFrame implements ActionListener, Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+		while(true){
+			String msg;
+			try {
+				msg = in.readLine();
+				System.out.println("Server=>"+msg);
+				StringTokenizer st=new StringTokenizer(msg, "|");//  shift + \
+				int protocol=Integer.parseInt(st.nextToken());
+				switch(protocol){
+				
+				}
+				
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

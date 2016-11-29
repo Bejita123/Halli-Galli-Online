@@ -4,9 +4,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.StringTokenizer;
+
 
 public class GameServer implements Runnable {
 	
@@ -68,4 +71,45 @@ public class GameServer implements Runnable {
     	}	
     }
 
+}
+class ClientThread extends Thread
+{
+	String id,posUser;		//id,이름,성별,상태
+	int myIndex; //0부터 시작 첫번째 유저는 0번...
+	Socket s;
+	BufferedReader in;	// client요청값을 읽어온다
+	OutputStream out;	//client로 결과값을 응답할때 
+	int myRoomIndex=-1;		//client가 있는 방 번호, 0부터 시작
+	
+	
+	public ClientThread(Socket s)
+	{
+		try{
+			this.s=s;			//각 클라이언트의 소켓 장착
+			in=new BufferedReader(new InputStreamReader(s.getInputStream()));
+			out=s.getOutputStream();
+		}catch(Exception ex){}
+	}
+	
+	public void run()			//2.client와 server간의 통신을 처리  //Client의 요청을 받음
+	{
+		while(true)			
+		{
+			try
+			{
+				String msg=in.readLine();
+				System.out.println("Client=>"+msg);		//Client에서 보낸 메시지를 나타내줌
+				StringTokenizer st=new StringTokenizer(msg, "|");
+				int protocol=Integer.parseInt(st.nextToken());
+				switch(protocol)
+				{
+					
+				}
+			}catch(Exception ex)
+			{
+				/*접속되어있던 Client 접속 종료시*/
+				interrupt();
+			}
+		}
+	}
 }
