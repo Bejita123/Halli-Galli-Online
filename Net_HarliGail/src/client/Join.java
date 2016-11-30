@@ -6,7 +6,11 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.awt.image.*;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+import client.ClientStart;
 
 public class Join extends JFrame implements ActionListener {
 
@@ -17,11 +21,16 @@ public class Join extends JFrame implements ActionListener {
 	MyPanel panel;
 
 
+	
+	
 	ImageIcon joinButton = new ImageIcon("img/JoinButton.png");
 	ImageIcon backButton = new ImageIcon("img/BackButton.png");
 
+	
 	Profile profile;
 
+
+	
 	public Join() {
 
 
@@ -71,7 +80,7 @@ public class Join extends JFrame implements ActionListener {
 		JPanel p = new JPanel(new GridLayout(1, 2)); // join, back버튼..?
 		p.add(b1);// join
 		p.add(b2);// back
-		//p.add(b3);
+		p.add(b3);
 		p.add(b4);
 		p.setOpaque(false);
 		p.setBounds(60, 200, 200, 40);
@@ -93,10 +102,6 @@ public class Join extends JFrame implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
-		new Join();
-	}
-
 	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -109,6 +114,15 @@ public class Join extends JFrame implements ActionListener {
 			dispose();
 		} else if (b3 == e.getSource()) {
 			System.out.println("ID중복체크");
+			id = idF.getText();			
+			try {
+				ClientStart.id_send(id);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
 		}
 
 		else if (b4 == e.getSource()) {

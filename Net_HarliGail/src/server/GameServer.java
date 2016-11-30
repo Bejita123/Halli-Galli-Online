@@ -1,11 +1,13 @@
 package server;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -83,7 +85,7 @@ class ClientThread extends Thread
 	int myIndex; //0부터 시작 첫번째 유저는 0번...
 	Socket s;
 	BufferedReader in;	// client요청값을 읽어온다
-	OutputStream out;	//client로 결과값을 응답할때 
+	BufferedWriter out;	//client로 결과값을 응답할때 
 	int myRoomIndex=-1;		//client가 있는 방 번호, 0부터 시작
 	
 	
@@ -92,7 +94,7 @@ class ClientThread extends Thread
 		try{
 			this.s=s;			//각 클라이언트의 소켓 장착
 			in=new BufferedReader(new InputStreamReader(s.getInputStream()));
-			out=s.getOutputStream();
+			out=new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
 			System.out.println("connect by user");
 		}catch(Exception ex){}
 	}
@@ -125,7 +127,16 @@ class ClientThread extends Thread
 
 					System.out.println("받은 파일 C:/profile 경로에 저장됨!");
 					
-					DB insertDB = new DB(id,pwd,fileName);					
+					DB insertDB = new DB(id,pwd,fileName);	
+					insertDB.insert();
+				}
+				
+				case Protocol.IDCHECK:{
+					String id=st.nextToken();
+					
+					DB checkDB=new DB(id,null,null);
+					int check=checkDB.check(id);
+					out.write(Protocol.IDCHECK+"|"+check);
 				}
 					
 				}

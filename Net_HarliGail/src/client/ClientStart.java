@@ -4,13 +4,15 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
-public class ClientStart extends JFrame implements ActionListener, Runnable{
+public class ClientStart  extends JFrame implements ActionListener, Runnable {
 
 	String serverIp = "localhost"; // server Ip addr
 	CardLayout card = new CardLayout();	// 창 전환을 위해 필요합니다!
@@ -123,6 +125,11 @@ public class ClientStart extends JFrame implements ActionListener, Runnable{
 				StringTokenizer st=new StringTokenizer(msg, "|");//  shift + \
 				int protocol=Integer.parseInt(st.nextToken());
 				switch(protocol){
+				case Protocol.IDCHECK:{
+					int check=Integer.parseInt(st.nextToken());
+					//모르겠당
+						
+				}
 				case Protocol.YOURTURN:				//0.자기차례일 때 카드뒤집기 버튼활성화
 				{
 					//gameR.cardOpen.setBorderPainted(false);     	
@@ -422,6 +429,13 @@ public class ClientStart extends JFrame implements ActionListener, Runnable{
 			}catch(Exception ex){validate();}
 			validate();
 		}
+	}
+	public static void id_send(String id) throws IOException{
+		
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));	
+		
+		writer.write(Protocol.IDCHECK+"|"+id);	
+		
 	}
 
 }
