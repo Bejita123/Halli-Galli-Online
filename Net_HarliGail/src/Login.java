@@ -13,7 +13,7 @@ public class Login extends JPanel{
 	
 	public Login()
 	{
-		bg = Toolkit.getDefaultToolkit().getImage("img/bg.png");
+		bg = Toolkit.getDefaultToolkit().getImage("img/login_bg.png");
 		label1 = new JLabel("ID");
 		label2 = new JLabel("PW");
 		

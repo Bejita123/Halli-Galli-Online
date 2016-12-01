@@ -26,7 +26,7 @@ public class GameServer implements Runnable {
 	public GameServer() throws IOException, SQLException{
 		try
 		{ 
-			InetAddress addr = InetAddress.getByName("192.168.0.19");
+			InetAddress addr = InetAddress.getByName("localhost");
        
 			server=new ServerSocket(1111, 100 ,addr);		// port number , max_server connection, IP address	
 			System.out.println("소켓"+s+"에 연결됨");

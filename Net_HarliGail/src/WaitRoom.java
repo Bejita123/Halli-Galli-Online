@@ -17,7 +17,7 @@ public class WaitRoom extends JPanel{
 	
 	public WaitRoom()
 	{
-		bg= Toolkit.getDefaultToolkit().getImage("img/monkey_back.jpg");
+		bg= Toolkit.getDefaultToolkit().getImage("img/testtt.jpg");//이미지 바꿈.
 		
 		String[] room = {"방이름","인원","게임상태"};	//방
 		String[][] row1 = new String[10][3]; // room열의 수에 맞게 5줄로 생성

@@ -10,7 +10,7 @@ public class GameWindow extends JPanel{
 	
 	public GameWindow()
 	{
-		bg=Toolkit.getDefaultToolkit().getImage("img/test.png");
+		bg=Toolkit.getDefaultToolkit().getImage("img/ttt.jpg");
 		
 		chat = new JTextArea();
 		JScrollPane js4 = new JScrollPane(chat);

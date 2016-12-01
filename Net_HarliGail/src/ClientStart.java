@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 
 public class ClientStart extends JFrame implements ActionListener, Runnable{
 
-	String serverIp = "192.168.0.19"; // server Ip addr
+	String serverIp = "localhost"; // server Ip addr
 	CardLayout card = new CardLayout();	// 창 전환을 위해 필요합니다!
 	Loading load = new Loading();		// 로딩창
 	Login login = new Login();			// 로그인창
